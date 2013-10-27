@@ -1,16 +1,29 @@
 Resume::Application.routes.draw do
+  devise_for :users
   #get "static_pages/home"
   #get "static_pages/contact"
   #get "static_pages/references"
   #get "static_pages/skills"
   
-  root "static_pages#home"
+  
   match '/skills', to: 'static_pages#skills', via: 'get'
   #match '/contact', to: 'static_pages#contact', via: 'get'
   match '/references', to: 'static_pages#references', via: 'get'
   match '/portfolio', to: 'static_pages#portfolio', via: 'get'
   match '/contact' => 'contact#new', :via => :get
   match '/contact' => 'contact#create', :via => :post
+  
+  devise_for :Users , :skip =>[:sessions]
+  
+  devise_scope :User do
+    root to: 'static_pages#home' #, only: [:new]
+    get 'signin' => 'devise/sessions#new', :as => :new_User_session
+    post 'signin' => 'devise/sessions#create', :as => :User_session
+    delete 'signout' => 'devise/sessions#destroy', :as => :destroy_User_session
+    match '/sessions/user', to: 'devise/sessions#create', via: :post
+  end
+  #after_sign_out_path_for 
+  #after_sign_in_path for
  # match 'contact' => 'contact#new', :as => 'contact', :via => :get
 #	match 'contact' => 'contact#create', :as => 'contact', :via => :post
   
