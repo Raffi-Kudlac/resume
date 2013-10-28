@@ -11,6 +11,11 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) << :username
   end
 
+
+  def sign_in
+    default_params.permit(:username, :email)
+  end
+
   private
 
     def after_sign_out_path_for(resource_or_score)

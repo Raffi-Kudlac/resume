@@ -1,5 +1,5 @@
 Resume::Application.routes.draw do
-  devise_for :users
+  #devise_for :users
   #get "static_pages/home"
   #get "static_pages/contact"
   #get "static_pages/references"
@@ -16,12 +16,13 @@ Resume::Application.routes.draw do
   devise_for :Users , :skip =>[:sessions]
   
   devise_scope :User do
-    root to: 'static_pages#home' #, only: [:new]
-    get 'signin' => 'devise/sessions#new', :as => :new_User_session
+    root to: 'static_pages#home', only: [:new]
+    get 'signin' => 'devise/sessions#new' , :as => :new_User_session
     post 'signin' => 'devise/sessions#create', :as => :User_session
-    delete 'signout' => 'devise/sessions#destroy', :as => :destroy_User_session
+    delete 'signout' => 'devise/sessions#destroy' , :as => :destroy_User_session
     match '/sessions/user', to: 'devise/sessions#create', via: :post
   end
+  
   #after_sign_out_path_for 
   #after_sign_in_path for
  # match 'contact' => 'contact#new', :as => 'contact', :via => :get
